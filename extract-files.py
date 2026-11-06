@@ -48,6 +48,17 @@ lib_fixups: lib_fixups_user_type = {
 
 
 blob_fixups: blob_fixups_user_type = {
+    # The stock sensor HAL keeps the stock transport and protobuf libraries;
+    # the malmo sensor services use their own libssc and libsnsapi.
+    'vendor/lib64/sensors.ssc.so': blob_fixup()
+        .replace_needed('libsnsapi.so', 'libsnsapi-stock.so')
+        .replace_needed('libssc.so', 'libssc-stock.so')
+        .add_needed('libcompiler_rt.so'),
+    'vendor/lib64/libssc-stock.so': blob_fixup()
+        .fix_soname()
+        .replace_needed('libsnsapi.so', 'libsnsapi-stock.so'),
+    'vendor/lib64/libsnsapi-stock.so': blob_fixup()
+        .fix_soname(),
     # SoftDev's unused installd cpuset scan requires forbidden cross-process access.
     'vendor/bin/thermal-engine-v2': blob_fixup()
         .sig_replace(
