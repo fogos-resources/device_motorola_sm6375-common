@@ -201,12 +201,6 @@ on post-fs-data
     chown vendor_pwric vendor_pwric /sys/class/power_supply/wireless/voltage_now
     chown vendor_pwric vendor_pwric /sys/class/power_supply/wireless/voltage_max
     chmod 0664 /sys/class/power_supply/wireless/voltage_max
-    chown vendor_pwric vendor_pwric /sys/kernel/debug/pmic-votable/CHG_DISABLE/force_val
-    chmod 0664 /sys/kernel/debug/pmic-votable/CHG_DISABLE/force_val
-    chown vendor_pwric vendor_pwric /sys/kernel/debug/pmic-votable/CHG_DISABLE/force_active
-    chmod 0664 /sys/kernel/debug/pmic-votable/CHG_DISABLE/force_active
-    chown vendor_pwric vendor_pwric /sys/kernel/debug/regulator/smb5-vconn/enable
-    chmod 0664 /sys/kernel/debug/regulator/smb5-vconn/enable
 
     chown root vendor_mod /sys/module/qpnp_smbcharger_mmi/parameters/eb_rechrg_start_soc
     chown root vendor_mod /sys/module/qpnp_smbcharger_mmi/parameters/eb_rechrg_stop_soc
@@ -463,9 +457,6 @@ service vendor.mmi-boot-sh /vendor/bin/init.mmi.boot.sh
 
 # set rkp csr indicatory property
 
-on property:ro.vendor.mot.hw.rkp_csr_uploaded=* && property:sys.boot_completed=1
-    setprop ro.rkp.csr_uploaded ${ro.vendor.mot.hw.rkp_csr_uploaded}
-
 service vendor.mmi-shutdown-sh /vendor/bin/init.mmi.shutdown.sh
     class core
     user root
@@ -643,12 +634,6 @@ on property:ro.carrier=softbank
 
 on property:ro.carrier=ymobile
     setprop audio.camerasound.force true
-
-on property:ro.sys.force_max_chrg_temp=*
-    write /sys/class/power_supply/battery/device/force_max_chrg_temp ${ro.sys.force_max_chrg_temp}
-
-on property:ro.sys.force_demo_mode=*
-    write /sys/class/power_supply/battery/device/force_demo_mode ${ro.sys.force_demo_mode}
 
 on property:ro.vendor.hw.pvtui=*
     setprop ro.hardware.device.pvtui ${ro.vendor.hw.pvtui}
