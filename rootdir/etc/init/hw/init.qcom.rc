@@ -860,3 +860,8 @@ on property:vendor.opengles.version=*
 
 on property:vendor.gpu.available_frequencies=*
     setprop ro.vendor.gpu.available_frequencies ${vendor.gpu.available_frequencies}
+
+# Without the video Codec2 store declaration (SM6375_HW_VIDEO), keep its
+# service from crash-looping.
+on boot && property:ro.vendor.sm6375.hw_video=false
+    stop vendor-qti-media-c2-hal-1-0
