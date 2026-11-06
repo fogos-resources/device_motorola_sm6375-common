@@ -48,6 +48,14 @@ lib_fixups: lib_fixups_user_type = {
 
 
 blob_fixups: blob_fixups_user_type = {
+    # SoftDev's unused installd cpuset scan requires forbidden cross-process access.
+    'vendor/bin/thermal-engine-v2': blob_fixup()
+        .sig_replace(
+            '00 ff ff b0 00 d8 09 91 b3 39 00 94 88 2e 00 d0 00 61 05 b9 20 02 f8 37 a0 18 00 d0 00 20 29 91 a4 f4 ff 97 a0 03 00 34',
+            '00 ff ff b0 00 d8 09 91 00 00 80 12 88 2e 00 d0 00 61 05 b9 20 02 f8 37 a0 18 00 d0 00 20 29 91 a4 f4 ff 97 a0 03 00 34'),
+    'vendor/etc/media_profiles_blair.xml': blob_fixup()
+        .regex_replace(r'\s+maxHFR(?:FrameWidth|FrameHeight|Mode)="[^"]*"', '')
+        .regex_replace(r'\s*<(?:VideoEditorCap|ExportVideoProfile)\b[^>]*/>', ''),
     'system_ext/lib64/libwfdmmsrc_system.so': blob_fixup()
         .add_needed('libaudiobase.so')
         .add_needed('libgui_shim.so'),
