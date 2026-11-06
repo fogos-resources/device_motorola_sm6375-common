@@ -110,6 +110,8 @@ vendor/lib64/libvideotxr.so
 vendor/lib64/qti.video.utils.videobufferlayout.so
 
 # Media Configs
+vendor/bin/init.qti.media.sh
+vendor/etc/init/init.qti.media.rc
 vendor/etc/media_blair/video_system_specs.json
 vendor/etc/media_codecs_blair.xml
 vendor/etc/media_codecs_performance_blair.xml
