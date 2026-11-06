@@ -186,3 +186,9 @@ on early-boot && property:persist.vendor.pcie.boot_option=*
 on property:sys.boot_completed=1
     # Enable PowerHAL hint processing
     setprop vendor.powerhal.init 1
+
+# Halve the WALT window (16ms -> 8ms at HZ=250) so frequency follows load
+# within one 120Hz frame. Qualcomm's perf HAL does this on stock; libperfmgr
+# does not. Runs after init.kernel.post_boot-blair.sh has applied its tunables.
+on property:vendor.post_boot.parsed=1
+    write /proc/sys/walt/sched_ravg_window_nr_ticks 2
